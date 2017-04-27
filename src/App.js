@@ -66,14 +66,22 @@ const chatHeader = {
   marginRight: '0px'
 }
 
+const primaryUserDetails = { 
+  backgroundColor: "#fff"
+}
+
+const info = { 
+
+}
+
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      diffGroups: null,
-      sameGroups: null,
-      primaryUser: null,
-      secondaryUser: null
+      appFuncs: null,
+      adGroups: null,
+      userDetails: null,
+      unixGroups: null
     };
   }
   componentWillMount() {
@@ -81,8 +89,8 @@ class App extends Component {
       .get('http://192.168.1.85:52820/api/users/Details/KAL1730')
       .then((response) => {
         console.log(response.data);
-        this.setState({primaryUser: response.data});
-        console.log("primary user: ", this.state.primaryUser.UserDetails)
+        this.setState({userDetails: response.data.UserDetails, appFuncs: response.data.AppFuncs, adGroups: response.data.ADGroups, unixGroups: response.data.UnixGroups});
+        console.log("primary user: ", this.state.userDetails.UserDetails)
       });
     // axios   .get('http://192.168.1.85:52820/api/users/Details/ISE8912')
     // .then((response) => {     console.log(response.data);
@@ -95,56 +103,58 @@ class App extends Component {
     // this.setState({sameGroups: response.data});   });
   }
   render() {
-    let primaryUser = null;
-    let secondaryUser = null;
-    let sameUser = null;
-    let diffUser = null;
-    if (this.state.primaryUser === null) {
-      primaryUser = (
-        <h2>
-          no user details loaded
-        </h2>
+    let userDetails = null;
+    let appFuncs = null;
+    let adGroups = null;
+    let unixGroups = null;
+    if (this.state.userDetails === null) {
+      userDetails = (
+        <text>
+          No User Details loaded
+        </text>
+      );
+      appFuncs = (
+        <text>
+          No App Funcs loaded
+        </text>
+      );
+      adGroups = (
+        <text>
+          No Ad Groups loaded
+        </text>
+      );
+     unixGroups = (
+        <text>
+          No UNIX Groups loaded
+        </text>
       );
     } else {
-      primaryUser = (
+      userDetails = (
         <div>
-          <UserDetails UserDetails={this.state.primaryUser}/>
-          <ADGroupList ADGroupDetails={this.state.primaryUser.ADGroups}/>
-          <AppFuncList AppFuncDetails={this.state.primaryUser.AppFuncs}/>
-          <UnixGroupList UnixGroupDetails={this.state.primaryUser.UnixGroups}/>
+          <UserDetails UserDetails={this.state.userDetails}/>
         </div>
       );
+      appFuncs = (<div>
+          <AppFuncList AppFuncDetails={this.state.appFuncs}/>
+      </div>
+      );
+
+      console.log("AD Groups", this.state.adGroups)
+
+      adGroups = (<div>
+          <ADGroupList ADGroupDetails={this.state.adGroups}/>
+      </div>
+      );
+
+      console.log("Unix Groups" , this.state.unixGroups);
+
+      unixGroups = (<div>
+          <UnixGroupList UnixGroupDetails={this.state.unixGroups}/>    
+      </div>
+      );
     }
 
-    if (this.state.secondaryUser === null) {
-      secondaryUser = (
-        <h2>
-          no user details loaded
-        </h2>
-      );
-    } else {
-      secondaryUser = <UserDetails UserDetails={this.state.secondaryUser}/>;
-    }
-
-    if (this.state.diffGroups === null) {
-      diffUser = (
-        <h2>
-          no user details loaded
-        </h2>
-      );
-    } else {
-      diffUser = <UserDetails UserDetails={this.state.diffGroups}/>;
-    }
-
-    if (this.state.sameGroups === null) {
-      sameUser = (
-        <h2>
-          no user details loaded
-        </h2>
-      );
-    } else {
-      sameUser = <UserDetails UserDetails={this.state.sameGroups}/>;
-    }
+   
     return (
       <div>
         {/*<LoremIpsum/>
@@ -156,13 +166,33 @@ class App extends Component {
         <Grid>
           <Row>
             <PageHeader>Make Me Look Like
-              <small>Chatbot Hackathon 2017
+              <small> &nbsp; Chatbot Hackathon 2017
               </small>
             </PageHeader>
 
           </Row>
           <Row>
-            {primaryUser}
+            <Col sm={6} lg={9}>
+                 {userDetails} 
+            </Col> 
+          </Row>
+
+           <Row>
+            <Col sm={6} lg={9}>
+                 {appFuncs} 
+            </Col> 
+          </Row>
+
+           <Row>
+            <Col sm={6} lg={9}>
+                 {adGroups} 
+            </Col> 
+          </Row>
+          
+           <Row>
+            <Col sm={6} lg={9}>
+                 {unixGroups} 
+            </Col> 
 
           </Row>
           <Row >

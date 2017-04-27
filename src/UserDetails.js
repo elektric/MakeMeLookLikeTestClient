@@ -1,4 +1,13 @@
 import React from 'react';
+import {Row, Col, Grid, Panel, ListGroup} from 'react-bootstrap';
+
+const primaryUserDetails = { 
+  backgroundColor: "#fff"
+}
+
+const info = { 
+
+}
 
 class UserDetails extends React.Component {
     constructor() {
@@ -42,15 +51,101 @@ class UserDetails extends React.Component {
                 );
             });*/
         return (
-            <div>
-                <h2>{this.props.UserDetails.UserDetails.displayname}</h2>
-                <h3>{this.props.UserDetails.UserDetails.samaccountname}</h3>
-                <h3>{this.props.UserDetails.UserDetails.department}</h3>
-                <h3>{this.props.UserDetails.UserDetails.mail}</h3>
-                <h3>{this.props.UserDetails.UserDetails.manager}</h3>
-                <h3>{this.props.UserDetails.UserDetails.telephonenumber}</h3>
-                <h3>{this.props.UserDetails.UserDetails.physicaldeliveryofficename}</h3>
-            </div>
+            <Panel
+                style={primaryUserDetails}
+                header="User Details"
+                collapsible
+                defaultExpanded>
+                <ListGroup>
+                    <Grid>
+                        <Row>
+                            <Col sm={1} lg={1}>
+                                <small
+                                    style={{
+                                    fontWeight: "bold"
+                                }}>
+                                    Name:
+                                </small>
+                            </Col>
+                            <Col sm={11} lg={11}>
+                                <small>{this.props.UserDetails.displayname}</small>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col sm={1} lg={1}>
+                                <small
+                                    style={{
+                                    fontWeight: "bold"
+                                }}>ID:
+                                </small>
+                            </Col>
+                            <Col sm={11} lg={11}>
+                                <small>{this.props.UserDetails.samaccountname}</small>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col sm={1} lg={1}>
+                                <small
+                                    style={{
+                                    fontWeight: "bold"
+                                }}>Department:
+                                </small>
+                            </Col>
+                            <Col sm={11} lg={11}>
+                                <small>{this.props.UserDetails.department}</small>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col sm={1} lg={1}>
+                                <small
+                                    style={{
+                                    fontWeight: "bold"
+                                }}>Email:
+                                </small>
+                            </Col>
+                            <Col sm={11} lg={11}>
+                                <small>{this.props.UserDetails.mail}</small>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col sm={1} lg={1}>
+                                <small
+                                    style={{
+                                    fontWeight: "bold"
+                                }}>Manager:</small>
+                            </Col>
+                            <Col sm={11} lg={11}>
+                                <small>{this.props.UserDetails.manager}</small>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col sm={1} lg={1}>
+                                <small
+                                    style={{
+                                    fontWeight: "bold"
+                                }}>Phone:
+                                </small>
+                            </Col>
+                            <Col sm={11} lg={11}>
+                                <small>{this.props.UserDetails.telephonenumber}</small>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col sm={1} lg={1}>
+                                <small
+                                    style={{
+                                    fontWeight: "bold"
+                                }}>Location:
+                                </small>
+                            </Col>
+                            <Col sm={11} lg={11}>
+                                <small>{this.props.UserDetails.physicaldeliveryofficename}</small>
+                            </Col>
+                        </Row>
+                    </Grid>
+
+                </ListGroup>
+            </Panel>
         );
     }
 

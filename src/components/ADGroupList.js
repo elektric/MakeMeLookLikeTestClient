@@ -1,5 +1,13 @@
 import React from 'react';
 import ADGroupElement from './ADGroupElement.js'
+import {Row, Col, Grid, Panel, ListGroup} from 'react-bootstrap';
+
+const primaryUserDetails = {
+  backgroundColor: "#fff"
+}
+
+const info = {}
+
 export default class ADGroupList extends React.Component {
     constructor() {
         super();
@@ -16,7 +24,15 @@ export default class ADGroupList extends React.Component {
         //console.log("insideADGroupList", adGroups);
         return (
             <div>
-                {adGroups}
+                <Panel
+                    style={primaryUserDetails}
+                    header="AD Groups"
+                    collapsible
+                    defaultExpanded>
+                    <ListGroup>
+                        {adGroups}
+                    </ListGroup>
+                </Panel>
             </div>
         );
     }
