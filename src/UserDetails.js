@@ -8,7 +8,7 @@ class UserDetails extends React.Component {
 
     render() {
         console.log("in UserDetails: ", this.props.UserDetails);
-        let adGroups = this
+        /*let adGroups = this
             .props
             .UserDetails
             .ADGroups
@@ -40,7 +40,7 @@ class UserDetails extends React.Component {
                         </h4>
                     </div>
                 );
-            });
+            });*/
         return (
             <div>
                 <h2>{this.props.UserDetails.UserDetails.displayname}</h2>
@@ -50,9 +50,6 @@ class UserDetails extends React.Component {
                 <h3>{this.props.UserDetails.UserDetails.manager}</h3>
                 <h3>{this.props.UserDetails.UserDetails.telephonenumber}</h3>
                 <h3>{this.props.UserDetails.UserDetails.physicaldeliveryofficename}</h3>
-                {adGroups}
-                {unixGroups}
-                {appFuncGroups}
             </div>
         );
     }

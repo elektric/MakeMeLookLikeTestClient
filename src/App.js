@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import LoremIpsum from './LoremIpsum.js';
 import UserDetails from './UserDetails.js';
+import ADGroupList from './components/ADGroupList.js';
 import {
   FormControl,
   Form,
@@ -82,30 +83,21 @@ class App extends Component {
   }
   componentWillMount() {
     axios
-      .get('http://s258948.nml.com:52820/api/users/Details/KAL1730')
+      .get('http://192.168.1.85:52820/api/users/Details/KAL1730')
       .then((response) => {
         console.log(response.data);
         this.setState({primaryUser: response.data});
         console.log("primary user: ", this.state.primaryUser.UserDetails)
       });
-    axios
-      .get('http://s258948.nml.com:52820/api/users/Details/ISE8912')
-      .then((response) => {
-        console.log(response.data);
-        this.setState({secondaryUser: response.data});
-      });
-    axios
-      .get('http://s258948.nml.com:52820/api/userCompare/getDiffGroups/KAL1730/ISE8912')
-      .then((response) => {
-        console.log(response.data);
-        this.setState({diffGroups: response.data});
-      });
-    axios
-      .get('http://s258948.nml.com:52820/api/userCompare/getSameGroups/KAL1730/ISE8912')
-      .then((response) => {
-        console.log(response.data);
-        this.setState({sameGroups: response.data});
-      });
+    // axios   .get('http://192.168.1.85:52820/api/users/Details/ISE8912')
+    // .then((response) => {     console.log(response.data);
+    // this.setState({secondaryUser: response.data});   }); axios
+    // .get('http://192.168.1.85:52820/api/userCompare/getDiffGroups/KAL1730/ISE8912'
+    // )   .then((response) => {     console.log(response.data);
+    // this.setState({diffGroups: response.data});   }); axios
+    // .get('http://192.168.1.85:52820/api/userCompare/getSameGroups/KAL1730/ISE8912'
+    // )   .then((response) => {     console.log(response.data);
+    // this.setState({sameGroups: response.data});   });
   }
   render() {
     let primaryUser = null;
@@ -113,36 +105,49 @@ class App extends Component {
     let sameUser = null;
     let diffUser = null;
     if (this.state.primaryUser === null) {
-      primaryUser = (<h2>
-        no user details loaded
-      </h2>);
+      primaryUser = (
+        <h2>
+          no user details loaded
+        </h2>
+      );
     } else {
-      primaryUser = <UserDetails UserDetails={this.state.primaryUser}/>;
+      primaryUser = (
+        <div>
+          <UserDetails UserDetails={this.state.primaryUser}/>
+          <ADGroupList ADGroupDetails={this.state.primaryUser.ADGroups}/>
+        </div>
+      );
     }
 
     if (this.state.secondaryUser === null) {
-      secondaryUser = (<h2>
-        no user details loaded
-      </h2>);
+      secondaryUser = (
+        <h2>
+          no user details loaded
+        </h2>
+      );
     } else {
       secondaryUser = <UserDetails UserDetails={this.state.secondaryUser}/>;
     }
 
     if (this.state.diffGroups === null) {
-      diffUser = (<h2>
-        no user details loaded
-      </h2>);
+      diffUser = (
+        <h2>
+          no user details loaded
+        </h2>
+      );
     } else {
       diffUser = <UserDetails UserDetails={this.state.diffGroups}/>;
     }
 
     if (this.state.sameGroups === null) {
-      sameUser = (<h2>
-        no user details loaded
-      </h2>);
+      sameUser = (
+        <h2>
+          no user details loaded
+        </h2>
+      );
     } else {
       sameUser = <UserDetails UserDetails={this.state.sameGroups}/>;
-    }    
+    }
     return (
       <div>
         {/*<LoremIpsum/>
@@ -164,7 +169,7 @@ class App extends Component {
             {secondaryUser}
             {sameUser}
             {diffUser}
-            
+
           </Row>
           <Row >
             <Col sm={6} lg={8} style={tbl}>
