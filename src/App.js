@@ -196,25 +196,25 @@ class App extends Component {
 
           </Row>
           <Row>
-            <Col sm={6} lg={9}>
+            <Col sm={9} lg={9}>
                  {userDetails} 
             </Col> 
           </Row>
 
            <Row>
-            <Col sm={6} lg={9}>
+            <Col sm={9} lg={9}>
                  {appFuncs} 
             </Col> 
           </Row>
 
            <Row>
-            <Col sm={6} lg={9}>
+            <Col sm={9} lg={9}>
                  {adGroups} 
             </Col> 
           </Row>
           
            <Row>
-            <Col sm={6} lg={9}>
+            <Col sm={9} lg={9}>
                  {unixGroups} 
             </Col> 
 
