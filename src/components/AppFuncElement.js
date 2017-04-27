@@ -1,11 +1,11 @@
 import React from 'react';
-import {ListGroupItem, Checkbox, Grid, Row, Col} from 'react-bootstrap';
+import {ListGroupItem, Button, Grid, Row, Col,} from 'react-bootstrap';
 export default class AppFuncElement extends React.Component {
     constructor() {
         super();
         this.state = {
             selected: true,
-            selectedText: 'Selected'
+            selectedText: 'Selected',
         };
         this.handleClick = this
             .handleClick
@@ -38,10 +38,7 @@ export default class AppFuncElement extends React.Component {
                             <small>{this.props.details.Description}</small>
                         </Col>
                         <Col sm={2} lg={2}>
-                            <Checkbox
-                                defaultChecked={true}
-                                checked={this.state.selected}
-                                onClick={this.handleClick}>{this.state.selectedText}</Checkbox>
+                                <Button onClick={this.handleClick} bsStyle={this.state.selected ? 'success' : 'danger'}>{this.state.selectedText}</Button>
                         </Col>
                     </Row>
                 </Grid>

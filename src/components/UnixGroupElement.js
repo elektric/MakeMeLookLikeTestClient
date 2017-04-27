@@ -1,5 +1,5 @@
 import React from 'react';
-import {ListGroupItem, Checkbox} from 'react-bootstrap';
+import {ListGroupItem, Button, Grid, Row, Col} from 'react-bootstrap';
 export default class UnixGroupElement extends React.Component {
   constructor() {
     super();
@@ -13,20 +13,25 @@ export default class UnixGroupElement extends React.Component {
   }
   handleClick(e) {
     if (this.state.selected) {
-      this.setState({selected: false, selectedText: 'Not Selected'})
-    } else {
-      this.setState({selected: true, selectedText: 'Selected'})
-    }
+            this.setState({selected: false, selectedText: 'Not Selected'})
+        } else {
+            this.setState({selected: true, selectedText: 'Selected'})
+        }
   }
 
   render() {
     return (
       <ListGroupItem>
-        <h4 key={this.props.index}>{this.props.details.Name}</h4>
-        <Checkbox
-                        defaultChecked={true}
-                        checked={this.state.selected}
-                        onClick={this.handleClick}>{this.state.selectedText}</Checkbox>
+        <Grid>
+          <Row>
+            <Col sm={6} lg={6}>
+              {this.props.details.Name}
+            </Col>
+            <Col sm={2} lg={2}>
+              <Button onClick={this.handleClick} bsStyle={this.state.selected ? 'success' : 'danger'}>{this.state.selectedText}</Button>
+            </Col>
+          </Row>
+        </Grid>
       </ListGroupItem>
     );
   }

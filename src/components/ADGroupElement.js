@@ -1,5 +1,5 @@
 import React from 'react';
-import {ListGroupItem, Checkbox} from 'react-bootstrap';
+import {ListGroupItem, Button, Grid, Row, Col} from 'react-bootstrap';
 
 export default class ADGroupElement extends React.Component {
     constructor() {
@@ -27,14 +27,17 @@ export default class ADGroupElement extends React.Component {
         //console.log("ad group element", this.props.details);
         return (
             <ListGroupItem key={this.props.index}>
-                <span>{this.props.details.Name}
-                </span>
-                <span>
-                    <Checkbox
-                        defaultChecked={true}
-                        checked={this.state.selected}
-                        onClick={this.handleClick}>{this.state.selectedText}</Checkbox>
-                </span>
+                <Grid>
+                    <Row>
+                        <Col sm={6} lg={6}>
+                            {this.props.details.Name}
+                            <small>{this.props.details.Description}</small>
+                        </Col>
+                        <Col sm={2} lg={2}>
+                           <Button onClick={this.handleClick} bsStyle={this.state.selected ? 'success' : 'danger'}>{this.state.selectedText}</Button>
+                        </Col>
+                    </Row>
+                </Grid>
             </ListGroupItem>
         );
     }
