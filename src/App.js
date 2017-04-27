@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './App.css';
-import '../node_modules/react-bootstrap-switch/src/less/bootstrap3/react-bootstrap-switch.less'
 import UserDetails from './UserDetails.js';
 import ADGroupList from './components/ADGroupList.js';
 import AppFuncList from './components/AppFuncList.js';
@@ -110,7 +109,20 @@ class App extends Component {
     var newArray = this.state.messageDetailsHistory.slice();    
     newArray.push(value);  
     this.setState({messageDetailsHistory:newArray})
-    console.log("New Array: " , newArray);
+
+    if (value.messageDetails.messageText.includes("Display Info for: ")) {
+      let UserId = (value.messageDetails.messageText.substring(value.messageDetails.messageText.length - 7)); 
+      console.log("User ID: ", UserId);
+
+        axios
+      .get('http://192.168.1.85:52820/api/users/Details/'+UserId)
+      .then((response) => {
+        //console.log(response.data);
+        this.setState({userDetails: response.data.UserDetails, appFuncs: response.data.AppFuncs, adGroups: response.data.ADGroups, unixGroups: response.data.UnixGroups});
+        //console.log("primary user: ", this.state.userDetails.UserDetails)
+      });
+    } 
+
 
   }
 

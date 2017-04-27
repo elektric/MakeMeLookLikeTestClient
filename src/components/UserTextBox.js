@@ -10,7 +10,7 @@ export default class UserTextBox extends React.Component {
 
   handleKeyPress = (e) => {
   
-  if(e.key === 'Enter'){
+  if(e.target.value.replace(/\s/g, "") && e.key === 'Enter'){
     var data = {messageDetails: {
                    "messageType": 2,
                    "messageText": e.target.value,
