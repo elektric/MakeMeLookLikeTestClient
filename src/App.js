@@ -69,8 +69,11 @@ class App extends Component {
       adGroups: null,
       userDetails: null,
       unixGroups: null,
+      userInput: null,
       messageDetailsHistory: [] 
     };
+
+    this.handleUserInput = this.UserInputHandler.bind(this); 
   }
   componentWillMount() {
     axios
@@ -90,12 +93,26 @@ class App extends Component {
     // ' )   .then((response) => {     console.log(response.data);
     // this.setState({sameGroups: response.data});   });
 
-    var newArray = this.state.messageDetailsHistory.slice();    
-    newArray.push("Hi User, How can I help you?");  
+     var data = {messageDetails: {
+                   "messageType": 1,
+                   "messageText": "Hi User, how can I help you?",
+               }
+           };
+
+    var newArray = this.state.messageDetailsHistory.slice(); 
+    newArray.push(data);  
     this.setState({messageDetailsHistory:newArray})
-    //console.log("New Array: " , newArray);
 
   }
+
+  UserInputHandler(value){      
+    var newArray = this.state.messageDetailsHistory.slice();    
+    newArray.push(value);  
+    this.setState({messageDetailsHistory:newArray})
+    console.log("New Array: " , newArray);
+
+  }
+
   render() {
     let userDetails = null;
     let appFuncs = null;
@@ -192,7 +209,7 @@ class App extends Component {
           <Row >
             <Col xs={6} sm={6} lg={8} style={tbl}></Col>
             <Col xs={5} sm={4} lg={3} style={floatInputBottomRightStyle}>
-              <ChatWindow messageDetailsHistory={this.state.messageDetailsHistory}/>
+              <ChatWindow messageDetailsHistory={this.state.messageDetailsHistory} handleUserInput={this.handleUserInput}/>
             </Col>
           </Row>
 

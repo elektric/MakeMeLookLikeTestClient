@@ -1,6 +1,8 @@
 import React from 'react';
-import {FormControl, Panel, ListGroup} from 'react-bootstrap';
+import {Panel, ListGroup} from 'react-bootstrap';
 import BotInput from '../components/BotInput.js';
+import UserResponse from '../components/UserResponse.js';
+import UserTextBox from '../components/UserTextBox.js';
 
 var axios = require('axios');
 
@@ -9,6 +11,7 @@ const bot = {
     //padding: '0px 0px 0px 0px'
 }
 const person = {
+    textAlign: 'left',
     //padding: '0px 0px 0px 0px'
 }
 
@@ -21,11 +24,20 @@ class ChatWindow extends React.Component {
     }
 
     render() {
+        console.log("message details" , this.props.messageDetailsHistory);
         let messageHistory = this
             .props
             .messageDetailsHistory
             .map((message, index) => {
-                return (<BotInput key={index} messageText={message}/>);
+                if (message.messageDetails.messageType === 1) {
+                    console.log("Message type 1" , message.messageDetails.messageText);
+                    return (<BotInput key={index} messageText={message.messageDetails.messageText}/>);
+                    
+                } else {
+                    console.log("Message type 2" , message.messageDetails.messageText);
+                    return (<UserResponse key={index} messageText={message.messageDetails.messageText}/>);
+                    
+                }
             });
 
         return (
@@ -39,7 +51,7 @@ class ChatWindow extends React.Component {
                 <ListGroup fill>
                     {messageHistory}
                 </ListGroup>
-                <FormControl type='text' label='chat' placeholder='Enter Text'/>
+                <UserTextBox handleUserInput={this.props.handleUserInput}/>
             </Panel>
         );
     }
