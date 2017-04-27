@@ -6,6 +6,7 @@ import UserDetails from './UserDetails.js';
 import ADGroupList from './components/ADGroupList.js';
 import AppFuncList from './components/AppFuncList.js';
 import UnixGroupList from './components/UnixGroupList.js';
+import ChatWindow from './containers/ChatWindow.js';
 import {
   FormControl,
   Form,
@@ -55,14 +56,6 @@ const tbl = {
   //backgroundColor: 'green'
 }
 
-const bot = {
-  textAlign: 'right',
-  //padding: '0px 0px 0px 0px'
-}
-const person = {
-  //padding: '0px 0px 0px 0px'
-}
-
 const whiteBoarder = {
   border: '1px solid white'
 }
@@ -94,11 +87,11 @@ class App extends Component {
     // axios   .get('http://192.168.1.85:52820/api/users/Details/ISE8912')
     // .then((response) => {     console.log(response.data);
     // this.setState({secondaryUser: response.data});   }); axios
-    // .get('http://192.168.1.85:52820/api/userCompare/getDiffGroups/KAL1730/ISE8912'
-    // )   .then((response) => {     console.log(response.data);
+    // .get('http://192.168.1.85:52820/api/userCompare/getDiffGroups/KAL1730/ISE8912
+    // ' )   .then((response) => {     console.log(response.data);
     // this.setState({diffGroups: response.data});   }); axios
-    // .get('http://192.168.1.85:52820/api/userCompare/getSameGroups/KAL1730/ISE8912'
-    // )   .then((response) => {     console.log(response.data);
+    // .get('http://192.168.1.85:52820/api/userCompare/getSameGroups/KAL1730/ISE8912
+    // ' )   .then((response) => {     console.log(response.data);
     // this.setState({sameGroups: response.data});   });
   }
   render() {
@@ -170,151 +163,12 @@ class App extends Component {
           </Row>
           <Row>
             {primaryUser}
-            {secondaryUser}
-            {sameUser}
-            {diffUser}
 
           </Row>
           <Row >
-            <Col sm={6} lg={8} style={tbl}>
-              {/*<LoremIpsum/>*/}
-              <text>
-                <h3>Try talking to the bot in the lower right chat window!
-                </h3>
-              </text>
-              <text>
-                <h4>
-                  Try telling the bot the following commands:
-                  <br/>
-                  <li>
-                    Make me look like Cole Isenberger
-                  </li>
-                  <li>
-                    Give me New Business Underwriter Access
-                  </li>
-                  <li>
-                    What groups do people in my role have?
-                  </li>
-                </h4>
-              </text>
-            </Col>
-            {/*Right side chat box
-            */}
-            <Col sm={4} lg={3} style={floatInputBottomRightStyle}>
-
-              <Panel
-                collapsible
-                defaultExpanded
-                header="Interactive Chat"
-                style={{
-                backgroundColor: 'white'
-              }}>
-                <ListGroup fill>
-
-                  <ListGroupItem style={bot}><img
-                    src={"https://image.freepik.com/free-icon/robot_318-81201.jpg"}
-                    style={{
-        width: '32px',
-        height: '32px',
-        float: 'left'
-      }}
-                    alt="logo"/>Hello User how are you today?
-                  </ListGroupItem>
-                  <ListGroupItem style={person}><img
-                    src={"http://people.nml.com/User%20Photos/Profile%20Pictures/kal1730_LThumb.jpg"}
-                    style={{
-        width: '32px',
-        height: '32px',
-        float: 'right'
-      }}
-                    alt="logo"/>I am great bot!</ListGroupItem>
-                  <ListGroupItem style={bot}><img
-                    src={"https://image.freepik.com/free-icon/robot_318-81201.jpg"}
-                    style={{
-        width: '32px',
-        height: '32px',
-        float: 'left'
-      }}
-                    alt="logo"/>What would you like to do today?</ListGroupItem>
-                  <ListGroupItem style={person}><img
-                    src={"http://people.nml.com/User%20Photos/Profile%20Pictures/kal1730_LThumb.jpg"}
-                    style={{
-        width: '32px',
-        height: '32px',
-        float: 'right'
-      }}
-                    alt="logo"/>Make KAL1730 look like ISE8912</ListGroupItem>
-                  <ListGroupItem style={bot}><img
-                    src={"https://image.freepik.com/free-icon/robot_318-81201.jpg"}
-                    style={{
-        width: '32px',
-        height: '32px',
-        float: 'left'
-      }}
-                    alt="logo"/>I've completed your request</ListGroupItem>
-                  <ListGroupItem style={person}><img
-                    src={"http://people.nml.com/User%20Photos/Profile%20Pictures/kal1730_LThumb.jpg"}
-                    style={{
-        width: '32px',
-        height: '32px',
-        float: 'right'
-      }}
-                    alt="logo"/>Thanks Mr. Robot!</ListGroupItem>
-                  <ListGroupItem style={bot}><img
-                    src={"https://image.freepik.com/free-icon/robot_318-81201.jpg"}
-                    style={{
-        width: '32px',
-        height: '32px',
-        float: 'left'
-      }}
-                    alt="logo"/>I've completed your request</ListGroupItem>
-                  <ListGroupItem style={person}><img
-                    src={"http://people.nml.com/User%20Photos/Profile%20Pictures/kal1730_LThumb.jpg"}
-                    style={{
-        width: '32px',
-        height: '32px',
-        float: 'right'
-      }}
-                    alt="logo"/>Thanks Mr. Robot!</ListGroupItem>
-                  <ListGroupItem style={bot}><img
-                    src={"https://image.freepik.com/free-icon/robot_318-81201.jpg"}
-                    style={{
-        width: '32px',
-        height: '32px',
-        float: 'left'
-      }}
-                    alt="logo"/>I've completed your request</ListGroupItem>
-                  <ListGroupItem style={person}><img
-                    src={"http://people.nml.com/User%20Photos/Profile%20Pictures/kal1730_LThumb.jpg"}
-                    style={{
-        width: '32px',
-        height: '32px',
-        float: 'right'
-      }}
-                    alt="logo"/>Thanks Mr. Robot!</ListGroupItem>
-                  <ListGroupItem style={bot}><img
-                    src={"https://image.freepik.com/free-icon/robot_318-81201.jpg"}
-                    style={{
-        width: '32px',
-        height: '32px',
-        float: 'left'
-      }}
-                    alt="logo"/>I've completed your request</ListGroupItem>
-                  <ListGroupItem style={person}><img
-                    src={"http://people.nml.com/User%20Photos/Profile%20Pictures/kal1730_LThumb.jpg"}
-                    style={{
-        width: '32px',
-        height: '32px',
-        float: 'right'
-      }}
-                    alt="logo"/>Thanks
-                    Mr. Robot! or are you a human? you are so smart that sometimes I cant tell what
-                    you are!
-                  </ListGroupItem>
-                </ListGroup>
-                <FormControl type='text' label='chat' placeholder='Enter Text'/>
-              </Panel>
-
+            <Col xs={6} sm={6} lg={8} style={tbl}></Col>
+            <Col xs={5} sm={4} lg={3} style={floatInputBottomRightStyle}>
+              <ChatWindow/>
             </Col>
           </Row>
 
