@@ -70,9 +70,6 @@ const primaryUserDetails = {
   backgroundColor: "#fff"
 }
 
-const info = { 
-
-}
 
 class App extends Component {
   constructor() {
@@ -81,7 +78,8 @@ class App extends Component {
       appFuncs: null,
       adGroups: null,
       userDetails: null,
-      unixGroups: null
+      unixGroups: null,
+      messageDetailsHistory: [] 
     };
   }
   componentWillMount() {
@@ -101,6 +99,12 @@ class App extends Component {
     // .get('http://192.168.1.85:52820/api/userCompare/getSameGroups/KAL1730/ISE8912
     // ' )   .then((response) => {     console.log(response.data);
     // this.setState({sameGroups: response.data});   });
+
+    var newArray = this.state.messageDetailsHistory.slice();    
+    newArray.push("Hi User, How can I help you?");  
+    this.setState({messageDetailsHistory:newArray})
+    console.log("New Array: " , newArray);
+
   }
   render() {
     let userDetails = null;
@@ -198,7 +202,7 @@ class App extends Component {
           <Row >
             <Col xs={6} sm={6} lg={8} style={tbl}></Col>
             <Col xs={5} sm={4} lg={3} style={floatInputBottomRightStyle}>
-              <ChatWindow/>
+              <ChatWindow messageDetailsHistory={this.state.messageDetailsHistory}/>
             </Col>
           </Row>
 
