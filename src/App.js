@@ -10,6 +10,9 @@ import {
   Col,
   Row,
   PageHeader,
+  Panel,
+  ListGroup,
+  Button
 } from 'react-bootstrap';
 
 var axios = require('axios');
@@ -56,10 +59,9 @@ const chatHeader = {
   marginRight: '0px'
 }
 
-const primaryUserDetails = { 
+const primaryUserDetails = {
   backgroundColor: "#fff"
 }
-
 
 class App extends Component {
   constructor() {
@@ -70,22 +72,23 @@ class App extends Component {
       userDetails: null,
       unixGroups: null,
       userInput: null,
-      messageDetailsHistory: [] 
+      messageDetailsHistory: []
     };
 
-    this.handleUserInput = this.UserInputHandler.bind(this); 
+    this.handleUserInput = this
+      .UserInputHandler
+      .bind(this);
   }
   componentWillMount() {
-    axios
-      .get('http://192.168.1.85:52820/api/users/Details/KAL1730')
-      .then((response) => {
-        //console.log(response.data);
-        this.setState({userDetails: response.data.UserDetails, appFuncs: response.data.AppFuncs, adGroups: response.data.ADGroups, unixGroups: response.data.UnixGroups});
-        //console.log("primary user: ", this.state.userDetails.UserDetails)
-      });
-    // axios   .get('http://192.168.1.85:52820/api/users/Details/ISE8912')
-    // .then((response) => {     console.log(response.data);
-    // this.setState({secondaryUser: response.data});   }); axios
+    // axios   .get('http://192.168.1.85:52820/api/users/Details/KAL1730')
+    // .then((response) => {     //console.log(response.data);
+    // this.setState({userDetails: response.data.UserDetails, appFuncs:
+    // response.data.AppFuncs, adGroups: response.data.ADGroups, unixGroups:
+    // response.data.UnixGroups});     //console.log("primary user: ",
+    // this.state.userDetails.UserDetails)   }); axios
+    // .get('http://192.168.1.85:52820/api/users/Details/ISE8912') .then((response)
+    // => {     console.log(response.data); this.setState({secondaryUser:
+    // response.data});   }); axios
     // .get('http://192.168.1.85:52820/api/userCompare/getDiffGroups/KAL1730/ISE8912
     // ' )   .then((response) => {     console.log(response.data);
     // this.setState({diffGroups: response.data});   }); axios
@@ -93,36 +96,52 @@ class App extends Component {
     // ' )   .then((response) => {     console.log(response.data);
     // this.setState({sameGroups: response.data});   });
 
-     var data = {messageDetails: {
-                   "messageType": 1,
-                   "messageText": "Hi User, how can I help you?",
-               }
-           };
+    var data = {
+      messageDetails: {
+        "messageType": 1,
+        "messageText": "Hi user, how can I help you?"
+      }
+    };
 
-    var newArray = this.state.messageDetailsHistory.slice(); 
-    newArray.push(data);  
-    this.setState({messageDetailsHistory:newArray})
+    var newArray = this
+      .state
+      .messageDetailsHistory
+      .slice();
+    newArray.push(data);
+    this.setState({messageDetailsHistory: newArray})
 
   }
 
-  UserInputHandler(value){      
-    var newArray = this.state.messageDetailsHistory.slice();    
-    newArray.push(value);  
-    this.setState({messageDetailsHistory:newArray})
+  UserInputHandler(value) {
+    var newArray = this
+      .state
+      .messageDetailsHistory
+      .slice();
+    newArray.push(value);
+    this.setState({messageDetailsHistory: newArray})
 
-    if (value.messageDetails.messageText.includes("Display Info for: ")) {
-      let UserId = (value.messageDetails.messageText.substring(value.messageDetails.messageText.length - 7)); 
+    if (value.messageDetails.messageText.includes(("Display info for: "))) {
+      let UserId = (value.messageDetails.messageText.substring(value.messageDetails.messageText.length - 7));
       console.log("User ID: ", UserId);
 
-        axios
-      .get('http://192.168.1.85:52820/api/users/Details/'+UserId)
-      .then((response) => {
-        //console.log(response.data);
-        this.setState({userDetails: response.data.UserDetails, appFuncs: response.data.AppFuncs, adGroups: response.data.ADGroups, unixGroups: response.data.UnixGroups});
-        //console.log("primary user: ", this.state.userDetails.UserDetails)
-      });
-    } 
+      axios
+        .get('http://192.168.1.85:52820/api/users/Details/' + UserId)
+        .then((response) => {
 
+          var newArrayBot = this
+            .state
+            .messageDetailsHistory
+            .slice();
+          var data = {
+            messageDetails: {
+              "messageType": 1,
+              "messageText": "I found the user details for: " + UserId
+            }
+          };
+          newArrayBot.push(data);
+          this.setState({userDetails: response.data.UserDetails, appFuncs: response.data.AppFuncs, adGroups: response.data.ADGroups, unixGroups: response.data.UnixGroups, messageDetailsHistory: newArrayBot});
+        });
+    }
 
   }
 
@@ -133,24 +152,48 @@ class App extends Component {
     let unixGroups = null;
     if (this.state.userDetails === null) {
       userDetails = (
-        <text>
-          No User Details loaded
-        </text>
+        <Panel
+          collapsible
+          defaultExpanded
+          header="User Details"
+          style={{
+          backgroundColor: 'white'
+        }}>
+          No User Details Loaded.
+        </Panel>
       );
       appFuncs = (
-        <text>
-          No App Funcs loaded
-        </text>
+        <Panel
+          collapsible
+          defaultExpanded
+          header="App Funcs"
+          style={{
+          backgroundColor: 'white'
+        }}>
+          No App Funcs Loaded.
+        </Panel>
       );
       adGroups = (
-        <text>
-          No Ad Groups loaded
-        </text>
+        <Panel
+          collapsible
+          defaultExpanded
+          header="AD Groups"
+          style={{
+          backgroundColor: 'white'
+        }}>
+          No AD Groups Loaded.
+        </Panel>
       );
-     unixGroups = (
-        <text>
-          No UNIX Groups loaded
-        </text>
+      unixGroups = (
+        <Panel
+          collapsible
+          defaultExpanded
+          header="UNIX Groups"
+          style={{
+          backgroundColor: 'white'
+        }}>
+          No UNIX Groups Loaded.
+        </Panel>
       );
     } else {
       userDetails = (
@@ -158,27 +201,29 @@ class App extends Component {
           <UserDetails UserDetails={this.state.userDetails}/>
         </div>
       );
-      appFuncs = (<div>
+      appFuncs = (
+        <div>
           <AppFuncList AppFuncDetails={this.state.appFuncs}/>
-      </div>
+        </div>
       );
 
       //console.log("AD Groups", this.state.adGroups)
 
-      adGroups = (<div>
+      adGroups = (
+        <div>
           <ADGroupList ADGroupDetails={this.state.adGroups}/>
-      </div>
+        </div>
       );
 
       //console.log("Unix Groups" , this.state.unixGroups);
 
-      unixGroups = (<div>
-          <UnixGroupList UnixGroupDetails={this.state.unixGroups}/>    
-      </div>
+      unixGroups = (
+        <div>
+          <UnixGroupList UnixGroupDetails={this.state.unixGroups}/>
+        </div>
       );
     }
 
-   
     return (
       <div>
         {/*<LoremIpsum/>
@@ -188,44 +233,54 @@ class App extends Component {
           </Form>
         </div>*/}
         <Grid>
-          <Row>
-            <PageHeader>Make Me Look Like
-              <small> &nbsp; Chatbot Hackathon 2017
+          <Row >
+            <PageHeader>
+              Make Me Look Like
+              <small>
+                &nbsp; Chatbot Hackathon 2017
               </small>
             </PageHeader>
 
           </Row>
           <Row>
             <Col sm={9} lg={9}>
-                 {userDetails} 
-            </Col> 
+              {userDetails}
+            </Col>
           </Row>
 
-           <Row>
+          <Row>
             <Col sm={9} lg={9}>
-                 {appFuncs} 
-            </Col> 
+              {appFuncs}
+            </Col>
           </Row>
 
-           <Row>
+          <Row>
             <Col sm={9} lg={9}>
-                 {adGroups} 
-            </Col> 
+              {adGroups}
+            </Col>
           </Row>
-          
-           <Row>
+
+          <Row>
             <Col sm={9} lg={9}>
-                 {unixGroups} 
-            </Col> 
+              {unixGroups}
+            </Col>
 
           </Row>
           <Row >
             <Col xs={6} sm={6} lg={8} style={tbl}></Col>
             <Col xs={5} sm={4} lg={3} style={floatInputBottomRightStyle}>
-              <ChatWindow messageDetailsHistory={this.state.messageDetailsHistory} handleUserInput={this.handleUserInput}/>
+              <ChatWindow
+                messageDetailsHistory={this.state.messageDetailsHistory}
+                handleUserInput={this.handleUserInput}/>
             </Col>
           </Row>
-
+          <Row>
+             <Col sm={9} lg={9}>
+                <Button style={{width: '100%', backgroundColor: '#FBB81F', color: 'white', fontWeight: 'bold'}}>
+                  Submit
+                </Button>
+            </Col>
+          </Row>
         </Grid>
       </div>
     );

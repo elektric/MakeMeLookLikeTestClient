@@ -18,7 +18,7 @@ export default class BotInput extends React.Component {
           console.log("Message Text" , this.messageText);
     return(
            <ListGroupItem style={bot}><img
-                src={"https://image.freepik.com/free-icon/robot_318-81201.jpg"}
+                src={require('../botLogo.png')}
                 style={{
                 marginTop: '-3px',
                 width: '25px',

@@ -15,7 +15,7 @@ export default class UserResponse extends React.Component {
   render() {
     return(
            <ListGroupItem style={person}><img
-                src={"https://image.freepik.com/free-icon/robot_318-81201.jpg"}
+                src={require('../userLogo.jpg')}
                 style={{
                 marginTop: '-3px',
                 width: '25px',
