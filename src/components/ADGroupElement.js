@@ -9,7 +9,7 @@ export default class ADGroupElement extends React.Component {
     }
 
     render() {
-        console.log("ad group element", this.props.details);
+        //console.log("ad group element", this.props.details);
         return (
             <h4 key={this.props.index}>{this.props.details.Name}</h4>
         );

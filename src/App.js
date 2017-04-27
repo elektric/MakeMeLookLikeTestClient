@@ -4,6 +4,8 @@ import './App.css';
 import LoremIpsum from './LoremIpsum.js';
 import UserDetails from './UserDetails.js';
 import ADGroupList from './components/ADGroupList.js';
+import AppFuncList from './components/AppFuncList.js';
+import UnixGroupList from './components/UnixGroupList.js';
 import {
   FormControl,
   Form,
@@ -115,6 +117,8 @@ class App extends Component {
         <div>
           <UserDetails UserDetails={this.state.primaryUser}/>
           <ADGroupList ADGroupDetails={this.state.primaryUser.ADGroups}/>
+          <AppFuncList AppFuncDetails={this.state.primaryUser.AppFuncs}/>
+          <UnixGroupList UnixGroupDetails={this.state.primaryUser.UnixGroups}/>
         </div>
       );
     }
