@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './App.css';
-import '../node_modules/react-bootstrap-switch/src/less/bootstrap3/react-bootstrap-switch.less'
 import UserDetails from './UserDetails.js';
 import ADGroupList from './components/ADGroupList.js';
 import AppFuncList from './components/AppFuncList.js';
