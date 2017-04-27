@@ -1,25 +1,15 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
 import './App.css';
-import LoremIpsum from './LoremIpsum.js';
 import UserDetails from './UserDetails.js';
 import ADGroupList from './components/ADGroupList.js';
 import AppFuncList from './components/AppFuncList.js';
 import UnixGroupList from './components/UnixGroupList.js';
 import ChatWindow from './containers/ChatWindow.js';
 import {
-  FormControl,
-  Form,
-  FormGroup,
   Grid,
   Col,
   Row,
   PageHeader,
-  Panel,
-  Glyphicon,
-  Button,
-  ListGroup,
-  ListGroupItem
 } from 'react-bootstrap';
 
 var axios = require('axios');
@@ -86,9 +76,9 @@ class App extends Component {
     axios
       .get('http://192.168.1.85:52820/api/users/Details/KAL1730')
       .then((response) => {
-        console.log(response.data);
+        //console.log(response.data);
         this.setState({userDetails: response.data.UserDetails, appFuncs: response.data.AppFuncs, adGroups: response.data.ADGroups, unixGroups: response.data.UnixGroups});
-        console.log("primary user: ", this.state.userDetails.UserDetails)
+        //console.log("primary user: ", this.state.userDetails.UserDetails)
       });
     // axios   .get('http://192.168.1.85:52820/api/users/Details/ISE8912')
     // .then((response) => {     console.log(response.data);
@@ -103,7 +93,7 @@ class App extends Component {
     var newArray = this.state.messageDetailsHistory.slice();    
     newArray.push("Hi User, How can I help you?");  
     this.setState({messageDetailsHistory:newArray})
-    console.log("New Array: " , newArray);
+    //console.log("New Array: " , newArray);
 
   }
   render() {
@@ -143,14 +133,14 @@ class App extends Component {
       </div>
       );
 
-      console.log("AD Groups", this.state.adGroups)
+      //console.log("AD Groups", this.state.adGroups)
 
       adGroups = (<div>
           <ADGroupList ADGroupDetails={this.state.adGroups}/>
       </div>
       );
 
-      console.log("Unix Groups" , this.state.unixGroups);
+      //console.log("Unix Groups" , this.state.unixGroups);
 
       unixGroups = (<div>
           <UnixGroupList UnixGroupDetails={this.state.unixGroups}/>    

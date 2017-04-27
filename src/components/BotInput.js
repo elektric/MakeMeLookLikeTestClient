@@ -1,5 +1,5 @@
 import React from 'react';
-import ListGroupItem from 'react-bootstrap';
+import {ListGroupItem} from 'react-bootstrap';
 
 const bot = {
   textAlign: 'right',
@@ -9,7 +9,7 @@ const person = {
   //padding: '0px 0px 0px 0px'
 }
 
-class BotInput extends React.Component {
+export default class BotInput extends React.Component {
   constructor() {
     super();
   }
@@ -32,5 +32,3 @@ class BotInput extends React.Component {
     this.setState({ someKey: 'otherValue' });
   }
 }
-
-export default BotInput;

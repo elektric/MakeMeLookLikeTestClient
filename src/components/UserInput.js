@@ -9,7 +9,7 @@ const person = {
   //padding: '0px 0px 0px 0px'
 }
 
-class UserInput extends React.Component {
+export default class UserInput extends React.Component {
   constructor() {
     super();
   }
@@ -33,4 +33,3 @@ class UserInput extends React.Component {
   }
 }
 
-export default UserInput;

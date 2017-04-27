@@ -1,28 +1,15 @@
 import React from 'react';
-import {
-    FormControl,
-    Form,
-    FormGroup,
-    Grid,
-    Col,
-    Row,
-    PageHeader,
-    Panel,
-    Glyphicon,
-    Button,
-    ListGroup,
-    ListGroupItem
-} from 'react-bootstrap';
+import {FormControl, Panel, ListGroup} from 'react-bootstrap';
 import BotInput from '../components/BotInput.js';
 
 var axios = require('axios');
 
 const bot = {
-  textAlign: 'right',
-  //padding: '0px 0px 0px 0px'
+    textAlign: 'right',
+    //padding: '0px 0px 0px 0px'
 }
 const person = {
-  //padding: '0px 0px 0px 0px'
+    //padding: '0px 0px 0px 0px'
 }
 
 class ChatWindow extends React.Component {
@@ -32,15 +19,14 @@ class ChatWindow extends React.Component {
             someKey: 'someValue'
         };
     }
-    
 
     render() {
-    let messageHistory = this
-     .props
-     .messageDetailsHistory
-     .map((message, index) => {
-       return (<BotInput key={index} messageText={message}/>);
-     });
+        let messageHistory = this
+            .props
+            .messageDetailsHistory
+            .map((message, index) => {
+                return (<BotInput key={index} messageText={message}/>);
+            });
 
         return (
             <Panel
