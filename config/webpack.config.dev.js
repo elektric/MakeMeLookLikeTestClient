@@ -115,7 +115,8 @@ module.exports = {
           /\.(js|jsx)(\?.*)?$/,
           /\.css$/,
           /\.json$/,
-          /\.svg$/
+          /\.svg$/,
+          /\.less$/
         ],
         loader: 'url',
         query: {
@@ -163,7 +164,9 @@ module.exports = {
         query: {
           name: 'static/media/[name].[hash:8].[ext]'
         }
-      }
+        
+      },
+      { test: /\.less$/, loader: "style-loader!css-loader!less-loader" },
       // ** STOP ** Are you adding a new loader? Remember to add the new extension(s)
       // to the "url" loader exclusion list.
     ]

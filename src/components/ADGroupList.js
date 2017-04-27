@@ -1,6 +1,6 @@
 import React from 'react';
 import ADGroupElement from './ADGroupElement.js'
-import {Row, Col, Grid, Panel, ListGroup} from 'react-bootstrap';
+import {Panel, ListGroup} from 'react-bootstrap';
 
 const primaryUserDetails = {
   backgroundColor: "#fff"
