@@ -21,7 +21,7 @@ export default class AppFuncList extends React.Component {
       .props
       .AppFuncDetails
       .map((group, index) => {
-        return (<AppFuncElement key={index} details={group}/>);
+        return (<AppFuncElement key={index} details={group} ButtonHandler={this.props.ButtonHandler} disabled={this.props.disabled}/>);
       });
     //console.log("insideADGroupList", adGroups);
     return (

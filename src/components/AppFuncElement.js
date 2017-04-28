@@ -15,8 +15,10 @@ export default class AppFuncElement extends React.Component {
     handleClick(e) {
         if (this.state.selected) {
             this.setState({selected: false, selectedText: 'Not Selected'})
+            this.props.ButtonHandler(-1);  
         } else {
             this.setState({selected: true, selectedText: 'Selected'})
+            this.props.ButtonHandler(1);
         }
     }
 
@@ -29,6 +31,17 @@ export default class AppFuncElement extends React.Component {
         } else {
             AppFuncWithAuthLevel = <h5 key={this.props.index}>{this.props.details.Name}</h5>
         }
+        var selButton;
+        if (this.props.disabled == false) {
+            var selButton = (
+                <Button
+                    onClick={this.handleClick}
+                    bsStyle={this.state.selected
+                    ? 'success'
+                    : 'danger'}
+                    disabled={this.props.disabled}>{this.state.selectedText}</Button>
+            )
+        }
         return (
             <ListGroupItem>
                 <Grid>
@@ -38,7 +51,7 @@ export default class AppFuncElement extends React.Component {
                             <small>{this.props.details.Description}</small>
                         </Col>
                         <Col sm={2} lg={2}>
-                                <Button onClick={this.handleClick} bsStyle={this.state.selected ? 'success' : 'danger'}>{this.state.selectedText}</Button>
+                                {selButton}
                         </Col>
                     </Row>
                 </Grid>

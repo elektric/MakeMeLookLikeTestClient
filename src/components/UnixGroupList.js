@@ -21,7 +21,7 @@ export default class UnixGroupList extends React.Component {
       .props
       .UnixGroupDetails
       .map((group, index) => {
-        return (<UnixGroupElement key={index} details={group}/>);
+        return (<UnixGroupElement key={index} details={group} ButtonHandler={this.props.ButtonHandler} disabled={this.props.disabled}/>);
       });
     //console.log("insideADGroupList", adGroups);
     return (

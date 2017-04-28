@@ -14,12 +14,25 @@ export default class UnixGroupElement extends React.Component {
   handleClick(e) {
     if (this.state.selected) {
             this.setState({selected: false, selectedText: 'Not Selected'})
+             this.props.ButtonHandler(-1); 
         } else {
             this.setState({selected: true, selectedText: 'Selected'})
+             this.props.ButtonHandler(1); 
         }
   }
 
   render() {
+    var selButton;
+        if (this.props.disabled == false) {
+            var selButton = (
+                <Button
+                    onClick={this.handleClick}
+                    bsStyle={this.state.selected
+                    ? 'success'
+                    : 'danger'}
+                    disabled={this.props.disabled}>{this.state.selectedText}</Button>
+            )
+        }
     return (
       <ListGroupItem>
         <Grid>
@@ -28,7 +41,7 @@ export default class UnixGroupElement extends React.Component {
               {this.props.details.Name}
             </Col>
             <Col sm={2} lg={2}>
-              <Button onClick={this.handleClick} bsStyle={this.state.selected ? 'success' : 'danger'}>{this.state.selectedText}</Button>
+              {selButton}
             </Col>
           </Row>
         </Grid>

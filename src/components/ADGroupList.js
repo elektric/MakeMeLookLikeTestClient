@@ -19,7 +19,7 @@ export default class ADGroupList extends React.Component {
             .props
             .ADGroupDetails
             .map((group, index) => {
-                return (<ADGroupElement key={index} details={group}/>);
+                return (<ADGroupElement key={index} details={group} ButtonHandler={this.props.ButtonHandler} disabled={this.props.disabled}/>);
             });
         //console.log("insideADGroupList", adGroups);
         return (

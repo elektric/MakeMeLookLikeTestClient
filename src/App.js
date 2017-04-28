@@ -68,12 +68,16 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      disabled: true,
       modal: false,
       appFuncs: null,
       adGroups: null,
       userDetails: null,
       unixGroups: null,
       userInput: null,
+      appFuncStateCount: 0,
+      unixStateCount: 0,
+      adGroupStateCount: 0,
       messageDetailsHistory: []
     };
 
@@ -86,6 +90,15 @@ class App extends Component {
     this.closeModal = this
       .CloseModal
       .bind(this);
+    this.appFuncButtonHandler = this
+    .appFuncButtonHandler
+    .bind(this);
+    this.adGroupButtonHandler = this
+    .adGroupButtonHandler
+    .bind(this);
+    this.unixButtonHandler = this
+    .unixButtonHandler
+    .bind(this);
   }
 
   componentWillMount() {
@@ -146,7 +159,9 @@ class App extends Component {
             }
           };
           newArrayBot.push(data);
-          this.setState({userDetails: response.data.user.UserDetails, appFuncs: response.data.user.AppFuncs, adGroups: response.data.user.ADGroups, unixGroups: response.data.user.UnixGroups, messageDetailsHistory: newArrayBot});
+          this.setState({userDetails: response.data.user.UserDetails, appFuncs: response.data.user.AppFuncs, adGroups: response.data.user.ADGroups, 
+            unixGroups: response.data.user.UnixGroups, messageDetailsHistory: newArrayBot, disabled:true, appFuncStateCount: response.data.user.AppFuncs.length,
+          adGroupStateCount: response.data.user.ADGroups.length, unixStateCount: response.data.user.UnixGroups.length});
         } else if (response.data.intent === "lookLike") {
           var newArrayBot = this
             .state
@@ -159,7 +174,9 @@ class App extends Component {
             }
           };
           newArrayBot.push(data);
-          this.setState({userDetails: response.data.user.UserDetails, appFuncs: response.data.user.AppFuncs, adGroups: response.data.user.ADGroups, unixGroups: response.data.user.UnixGroups, messageDetailsHistory: newArrayBot});
+          this.setState({userDetails: response.data.user.UserDetails, appFuncs: response.data.user.AppFuncs, adGroups: response.data.user.ADGroups, 
+            unixGroups: response.data.user.UnixGroups, messageDetailsHistory: newArrayBot, disabled:false, appFuncStateCount: response.data.user.AppFuncs.length,
+          adGroupStateCount: response.data.user.ADGroups.length, unixStateCount: response.data.user.UnixGroups.length});
         } else if (response.data.intent === "grantRole") {
           var newArrayBot = this
             .state
@@ -172,8 +189,10 @@ class App extends Component {
             }
           };
           newArrayBot.push(data);
-          this.setState({userDetails: response.data.user.UserDetails, appFuncs: response.data.user.AppFuncs, adGroups: response.data.user.ADGroups, unixGroups: response.data.user.UnixGroups, messageDetailsHistory: newArrayBot});
-        } else {
+          this.setState({userDetails: response.data.user.UserDetails, appFuncs: response.data.user.AppFuncs, adGroups: response.data.user.ADGroups, 
+            unixGroups: response.data.user.UnixGroups, messageDetailsHistory: newArrayBot, appFuncStateCount: response.data.user.AppFuncs.length,
+          adGroupStateCount: response.data.user.ADGroups.length, unixStateCount: response.data.user.UnixGroups.length});
+        } else  if (response.data.intent ==="Invalid"){
           var newArrayBot = this
             .state
             .messageDetailsHistory
@@ -181,12 +200,28 @@ class App extends Component {
           var data = {
             messageDetails: {
               "messageType": 1,
-              "messageText": response.data
+              "messageText": response.data.botMessage
             }
           };
           newArrayBot.push(data);
           this.setState({messageDetailsHistory: newArrayBot});
         }
+
+        else  {
+          var newArrayBot = this
+            .state
+            .messageDetailsHistory
+            .slice();
+          var data = {
+            messageDetails: {
+              "messageType": 1,
+              "messageText": "Our chat service is currently unavailable. Please call #3824."
+            }
+          };
+          newArrayBot.push(data);
+          this.setState({messageDetailsHistory: newArrayBot});
+        }
+
 
       });
   }
@@ -204,6 +239,24 @@ class App extends Component {
     };
     submitArr.push(data);
     this.setState({messageDetailsHistory: submitArr, modal: true});
+  }
+
+  appFuncButtonHandler(value){
+    let count = this.state.appFuncStateCount; 
+
+    this.setState({appFuncStateCount: count + value});
+  }
+
+  adGroupButtonHandler(value){
+    let count = this.state.adGroupStateCount; 
+
+    this.setState({adGroupStateCount: count + value});
+  }
+
+  unixButtonHandler(value){
+    let count = this.state.unixStateCount; 
+
+    this.setState({unixStateCount: count + value});
   }
 
   CloseModal() {
@@ -268,7 +321,7 @@ class App extends Component {
       );
       appFuncs = (
         <div>
-          <AppFuncList AppFuncDetails={this.state.appFuncs}/>
+          <AppFuncList AppFuncDetails={this.state.appFuncs} ButtonHandler={this.appFuncButtonHandler} disabled={this.state.disabled}/>
         </div>
       );
 
@@ -276,7 +329,7 @@ class App extends Component {
 
       adGroups = (
         <div>
-          <ADGroupList ADGroupDetails={this.state.adGroups}/>
+          <ADGroupList ADGroupDetails={this.state.adGroups} ButtonHandler={this.adGroupButtonHandler} disabled={this.state.disabled}/>
         </div>
       );
 
@@ -284,7 +337,7 @@ class App extends Component {
 
       unixGroups = (
         <div>
-          <UnixGroupList UnixGroupDetails={this.state.unixGroups}/>
+          <UnixGroupList UnixGroupDetails={this.state.unixGroups} ButtonHandler={this.unixButtonHandler} disabled={this.state.disabled}/>
         </div>
       );
     }
@@ -366,6 +419,7 @@ class App extends Component {
                 color: 'white',
                 fontWeight: 'bold'
               }}
+                disabled={this.state.disabled}
                 onClick={this.submitHandler}>
                 Submit
               </Button>
@@ -374,7 +428,7 @@ class App extends Component {
         </Grid>
 
         <Modal show={this.state.modal} onHide={this.close}>
-          <Modal.Header closeButton>
+          <Modal.Header>
             <Modal.Title style={{backgroundColor: 'white', justifyContent: 'center',textAlign: 'center', fontWeight: 'bold'}}>
               Submitted Access
             </Modal.Title>
@@ -392,7 +446,7 @@ class App extends Component {
               justifyContent: 'center',
               textAlign: 'center'
               }}>
-                   I have submitted {appFuncCount} App Funcs for you!
+                   I have submitted {this.state.appFuncStateCount} App Funcs for you!
               </Panel>
             </Col>
           </Row>
@@ -408,7 +462,7 @@ class App extends Component {
             justifyContent: 'center',
             textAlign: 'center'
             }}>
-              I have submitted {adGroupCount} AD Groups for you!
+              I have submitted {this.state.adGroupStateCount} AD Groups for you!
               </Panel>
             </Col>
           </Row>
@@ -424,7 +478,7 @@ class App extends Component {
               justifyContent: 'center',
               textAlign: 'center'
               }}>
-                I have submitted {unixCount} UNIX Groups for you!
+                I have submitted {this.state.unixStateCount} UNIX Groups for you!
               </Panel>
             </Col>
 
@@ -432,7 +486,12 @@ class App extends Component {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.closeModal}>Close</Button>
+            <Button 
+             style={{
+                backgroundColor: '#FBB81F',
+                color: 'white',
+                fontWeight: 'bold'}}
+             onClick={this.closeModal}>Close</Button>
           </Modal.Footer>
         </Modal>
       </div>
