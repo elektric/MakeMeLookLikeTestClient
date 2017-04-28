@@ -11,8 +11,8 @@ import {
   Row,
   PageHeader,
   Panel,
-  ListGroup, 
-  Button, 
+  ListGroup,
+  Button,
   Modal
 } from 'react-bootstrap';
 
@@ -77,9 +77,15 @@ class App extends Component {
       messageDetailsHistory: []
     };
 
-    this.handleUserInput = this.UserInputHandler.bind(this);
-    this.submitHandler = this.SubmitHandler.bind(this);
-    this.closeModal = this.CloseModal.bind(this);
+    this.handleUserInput = this
+      .UserInputHandler
+      .bind(this);
+    this.submitHandler = this
+      .SubmitHandler
+      .bind(this);
+    this.closeModal = this
+      .CloseModal
+      .bind(this);
   }
 
   componentWillMount() {
@@ -115,7 +121,7 @@ class App extends Component {
 
   }
 
-   UserInputHandler(value) {
+  UserInputHandler(value) {
     var newArray = this
       .state
       .messageDetailsHistory
@@ -123,11 +129,11 @@ class App extends Component {
     newArray.push(value);
     this.setState({messageDetailsHistory: newArray})
 
-      axios
-        .get('http://192.168.1.85:52820/api/chat/getIntent/'+ value.messageDetails.messageText)
-        .then((response) => {
-            console.log("Intent: ", response);
-          if(response.data.intent === "single"){
+    axios
+      .get('http://192.168.1.85:52820/api/chat/getIntent/' + value.messageDetails.messageText)
+      .then((response) => {
+        console.log("Intent: ", response);
+        if (response.data.intent === "inquiry") {
 
           var newArrayBot = this
             .state
@@ -136,14 +142,12 @@ class App extends Component {
           var data = {
             messageDetails: {
               "messageType": 1,
-              "messageText": response.data.botMessage 
+              "messageText": response.data.botMessage
             }
           };
           newArrayBot.push(data);
           this.setState({userDetails: response.data.user.UserDetails, appFuncs: response.data.user.AppFuncs, adGroups: response.data.user.ADGroups, unixGroups: response.data.user.UnixGroups, messageDetailsHistory: newArrayBot});
-        }
-        
-        else if(response.data.intent==="lookLike") {
+        } else if (response.data.intent === "lookLike") {
           var newArrayBot = this
             .state
             .messageDetailsHistory
@@ -151,30 +155,26 @@ class App extends Component {
           var data = {
             messageDetails: {
               "messageType": 1,
-              "messageText": response.data.botMessage 
+              "messageText": response.data.botMessage
             }
           };
           newArrayBot.push(data);
           this.setState({userDetails: response.data.user.UserDetails, appFuncs: response.data.user.AppFuncs, adGroups: response.data.user.ADGroups, unixGroups: response.data.user.UnixGroups, messageDetailsHistory: newArrayBot});
-        }
-
-        else if(response.data.intent==="grantRole"){
-        var newArrayBot = this
+        } else if (response.data.intent === "grantRole") {
+          var newArrayBot = this
             .state
             .messageDetailsHistory
             .slice();
           var data = {
             messageDetails: {
               "messageType": 1,
-              "messageText": response.data.botMessage 
+              "messageText": response.data.botMessage
             }
           };
           newArrayBot.push(data);
           this.setState({userDetails: response.data.user.UserDetails, appFuncs: response.data.user.AppFuncs, adGroups: response.data.user.ADGroups, unixGroups: response.data.user.UnixGroups, messageDetailsHistory: newArrayBot});
-        }
-
-        else {
-        var newArrayBot = this
+        } else {
+          var newArrayBot = this
             .state
             .messageDetailsHistory
             .slice();
@@ -187,26 +187,26 @@ class App extends Component {
           newArrayBot.push(data);
           this.setState({messageDetailsHistory: newArrayBot});
         }
-        
+
       });
   }
 
-  SubmitHandler(value){
-  var submitArr = this
-            .state
-            .messageDetailsHistory
-            .slice();
-  var data = {
-            messageDetails: {
-              "messageType": 1,
-              "messageText": "I've submitted the access requests for you!" 
-            }
-          };
-   submitArr.push(data); 
-   this.setState({messageDetailsHistory: submitArr, modal: true});
+  SubmitHandler(value) {
+    var submitArr = this
+      .state
+      .messageDetailsHistory
+      .slice();
+    var data = {
+      messageDetails: {
+        "messageType": 1,
+        "messageText": "I've submitted the access requests for you!"
+      }
+    };
+    submitArr.push(data);
+    this.setState({messageDetailsHistory: submitArr, modal: true});
   }
 
-  CloseModal(){
+  CloseModal() {
     this.setState({modal: false});
   }
 
@@ -289,6 +289,31 @@ class App extends Component {
       );
     }
 
+    var appFuncCount = 0; 
+    var unixCount = 0; 
+    var adGroupCount = 0
+
+    if (this.state.appFuncs === null) {
+       appFuncCount = 0;
+    }
+    else {
+       appFuncCount = this.state.appFuncs.length;
+    } 
+
+    if (this.state.unixGroups === null) {
+       unixCount = 0;
+    }
+    else {
+       unixCount = this.state.unixGroups.length;
+    } 
+
+    if (this.state.adGroups === null) {
+       adGroupCount = 0;
+    }
+    else {
+       adGroupCount = this.state.adGroups.length;
+    } 
+
     return (
       <div>
         <Grid>
@@ -303,7 +328,7 @@ class App extends Component {
           </Row>
           <Row>
             <Col sm={9} lg={9}>
-              {userDetails}
+             {userDetails}
             </Col>
           </Row>
 
@@ -334,45 +359,82 @@ class App extends Component {
             </Col>
           </Row>
           <Row>
-             <Col sm={9} lg={9}>
-                <Button style={{backgroundColor: '#FBB81F', color: 'white', fontWeight: 'bold'}} onClick={this.submitHandler}>
-                  Submit
-                </Button>
+            <Col sm={9} lg={9}>
+              <Button
+                style={{
+                backgroundColor: '#FBB81F',
+                color: 'white',
+                fontWeight: 'bold'
+              }}
+                onClick={this.submitHandler}>
+                Submit
+              </Button>
             </Col>
           </Row>
         </Grid>
-           
-           <Modal show={this.state.modal} onHide={this.close}>
+
+        <Modal show={this.state.modal} onHide={this.close}>
           <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title style={{backgroundColor: 'white', justifyContent: 'center',textAlign: 'center', fontWeight: 'bold'}}>
+              Submitted Access
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-             <div className="container">
-  <div className="cup">
-    <div className="coffee"> </div>
-  </div>
-  <div className="holder"></div>
-  <div className="holder2"> </div>
-  <div className="straw"> 
-    <div className="inner"> </div>
-  </div>
-  
-  <div className="laptop"> 
-    <div className="monitor">
-      <div className="screen"> 
-        <div className="element"> </div>
-      </div>
-      <div className="stand"> 
-        <div className="base"> </div>
-      </div>
-    </div>
-  </div>
-</div>
+            <div>
+          <Row>
+            <Col sm={12} lg={12}>
+            <Panel
+              collapsible
+              defaultExpanded
+              header="App Funcs"
+              style={{
+              backgroundColor: 'white',
+              justifyContent: 'center',
+              textAlign: 'center'
+              }}>
+                   I have submitted {appFuncCount} App Funcs for you!
+              </Panel>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col sm={12} lg={12}>
+            <Panel
+            collapsible
+            defaultExpanded
+            header="AD Groups"
+            style={{
+            backgroundColor: 'white',
+            justifyContent: 'center',
+            textAlign: 'center'
+            }}>
+              I have submitted {adGroupCount} AD Groups for you!
+              </Panel>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col sm={12} lg={12}>
+            <Panel
+              collapsible
+              defaultExpanded
+              header="UNIX Groups"
+              style={{
+              backgroundColor: 'white',
+              justifyContent: 'center',
+              textAlign: 'center'
+              }}>
+                I have submitted {unixCount} UNIX Groups for you!
+              </Panel>
+            </Col>
+
+          </Row>
+            </div>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.closeModal}>Close</Button>
           </Modal.Footer>
-          </Modal>
+        </Modal>
       </div>
     );
   }
