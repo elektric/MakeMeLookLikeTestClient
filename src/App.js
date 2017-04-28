@@ -11,7 +11,7 @@ import {
   Row,
   PageHeader,
   Panel,
-  ListGroup,
+  ListGroup, 
   Button
 } from 'react-bootstrap';
 
@@ -153,7 +153,39 @@ class App extends Component {
           };
           newArrayBot.push(data);
           this.setState({userDetails: response.data.user.UserDetails, appFuncs: response.data.user.AppFuncs, adGroups: response.data.user.ADGroups, unixGroups: response.data.user.UnixGroups, messageDetailsHistory: newArrayBot});
-        }});
+        }
+
+        else if(response.data.intent==="grantRole"){
+        var newArrayBot = this
+            .state
+            .messageDetailsHistory
+            .slice();
+          var data = {
+            messageDetails: {
+              "messageType": 1,
+              "messageText": response.data.botMessage 
+            }
+          };
+          newArrayBot.push(data);
+          this.setState({userDetails: response.data.user.UserDetails, appFuncs: response.data.user.AppFuncs, adGroups: response.data.user.ADGroups, unixGroups: response.data.user.UnixGroups, messageDetailsHistory: newArrayBot});
+        }
+
+        else {
+        var newArrayBot = this
+            .state
+            .messageDetailsHistory
+            .slice();
+          var data = {
+            messageDetails: {
+              "messageType": 1,
+              "messageText": response.data
+            }
+          };
+          newArrayBot.push(data);
+          this.setState({messageDetailsHistory: newArrayBot});
+        }
+        
+      });
   }
 
   SubmitHandler(value){
@@ -296,7 +328,7 @@ class App extends Component {
           </Row>
           <Row>
              <Col sm={9} lg={9}>
-                <Button style={{width: '100%', backgroundColor: '#FBB81F', color: 'white', fontWeight: 'bold'}} onClick={this.submitHandler}>
+                <Button style={{backgroundColor: '#FBB81F', color: 'white', fontWeight: 'bold'}} onClick={this.submitHandler}>
                   Submit
                 </Button>
             </Col>

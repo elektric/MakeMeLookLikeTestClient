@@ -40,7 +40,7 @@ class ChatWindow extends React.Component {
             }));
 
         }   else    {
-            let tempArr = this.props.messageDetailsHistory;
+            let tempArr = JSON.parse(JSON.stringify(this.props.messageDetailsHistory));
              tempArr = tempArr.splice(this.props.messageDetailsHistory.length-8);
              console.log("TempArr: " , tempArr.length);
              messageHistory = (tempArr.map((message, index) => {
@@ -63,7 +63,7 @@ class ChatWindow extends React.Component {
                 defaultExpanded
                 header="Chat Bot"
                 style={{
-                backgroundColor: 'white'
+                backgroundColor: 'white',
             }}>
                 <ListGroup fill>
                     {messageHistory}
