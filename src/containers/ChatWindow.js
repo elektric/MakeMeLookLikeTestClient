@@ -24,21 +24,38 @@ class ChatWindow extends React.Component {
     }
 
     render() {
-        console.log("message details" , this.props.messageDetailsHistory);
-        let messageHistory = this
-            .props
-            .messageDetailsHistory
-            .map((message, index) => {
+        console.log("message details", this.props.messageDetailsHistory);
+        let messageHistory = null
+        if (this.props.messageDetailsHistory.length <= 8) {
+            messageHistory = (this.props.messageDetailsHistory.map((message, index) => {
                 if (message.messageDetails.messageType === 1) {
-                    console.log("Message type 1" , message.messageDetails.messageText);
+                    console.log("Message type 1", message.messageDetails.messageText);
                     return (<BotInput key={index} messageText={message.messageDetails.messageText}/>);
-                    
+
                 } else {
-                    console.log("Message type 2" , message.messageDetails.messageText);
+                    console.log("Message type 2", message.messageDetails.messageText);
                     return (<UserResponse key={index} messageText={message.messageDetails.messageText}/>);
-                    
+
                 }
-            });
+            }));
+
+        }   else    {
+            let tempArr = this.props.messageDetailsHistory;
+             tempArr = tempArr.splice(this.props.messageDetailsHistory.length-8);
+             console.log("TempArr: " , tempArr.length);
+             messageHistory = (tempArr.map((message, index) => {
+                if (message.messageDetails.messageType === 1) {
+                    console.log("Message type 1", message.messageDetails.messageText);
+                    return (<BotInput key={index} messageText={message.messageDetails.messageText}/>);
+
+                } else {
+                    console.log("Message type 2", message.messageDetails.messageText);
+                    return (<UserResponse key={index} messageText={message.messageDetails.messageText}/>);
+
+                }
+              }));
+        }
+        console.log("MessageHistoryLength: ", this.props.messageDetailsHistory.length);
 
         return (
             <Panel

@@ -75,10 +75,10 @@ class App extends Component {
       messageDetailsHistory: []
     };
 
-    this.handleUserInput = this
-      .UserInputHandler
-      .bind(this);
+    this.handleUserInput = this.UserInputHandler.bind(this);
+    this.submitHandler = this.SubmitHandler.bind(this);
   }
+
   componentWillMount() {
     // axios   .get('http://192.168.1.85:52820/api/users/Details/KAL1730')
     // .then((response) => {     //console.log(response.data);
@@ -112,7 +112,7 @@ class App extends Component {
 
   }
 
-  UserInputHandler(value) {
+   UserInputHandler(value) {
     var newArray = this
       .state
       .messageDetailsHistory
@@ -120,13 +120,11 @@ class App extends Component {
     newArray.push(value);
     this.setState({messageDetailsHistory: newArray})
 
-    if (value.messageDetails.messageText.includes(("Display info for: "))) {
-      let UserId = (value.messageDetails.messageText.substring(value.messageDetails.messageText.length - 7));
-      console.log("User ID: ", UserId);
-
       axios
-        .get('http://192.168.1.85:52820/api/users/Details/' + UserId)
+        .get('http://192.168.1.85:52820/api/chat/getIntent/'+ value.messageDetails.messageText)
         .then((response) => {
+            console.log("Intent: ", response);
+          if(response.data.intent === "single"){
 
           var newArrayBot = this
             .state
@@ -135,14 +133,42 @@ class App extends Component {
           var data = {
             messageDetails: {
               "messageType": 1,
-              "messageText": "I found the user details for: " + UserId
+              "messageText": response.data.botMessage 
             }
           };
           newArrayBot.push(data);
-          this.setState({userDetails: response.data.UserDetails, appFuncs: response.data.AppFuncs, adGroups: response.data.ADGroups, unixGroups: response.data.UnixGroups, messageDetailsHistory: newArrayBot});
-        });
-    }
+          this.setState({userDetails: response.data.user.UserDetails, appFuncs: response.data.user.AppFuncs, adGroups: response.data.user.ADGroups, unixGroups: response.data.user.UnixGroups, messageDetailsHistory: newArrayBot});
+        }
+        
+        else if(response.data.intent==="lookLike") {
+          var newArrayBot = this
+            .state
+            .messageDetailsHistory
+            .slice();
+          var data = {
+            messageDetails: {
+              "messageType": 1,
+              "messageText": response.data.botMessage 
+            }
+          };
+          newArrayBot.push(data);
+          this.setState({userDetails: response.data.user.UserDetails, appFuncs: response.data.user.AppFuncs, adGroups: response.data.user.ADGroups, unixGroups: response.data.user.UnixGroups, messageDetailsHistory: newArrayBot});
+        }});
+  }
 
+  SubmitHandler(value){
+  var submitArr = this
+            .state
+            .messageDetailsHistory
+            .slice();
+  var data = {
+            messageDetails: {
+              "messageType": 1,
+              "messageText": "I've submitted the access requests for you!" 
+            }
+          };
+   submitArr.push(data); 
+   this.setState({messageDetailsHistory: submitArr});
   }
 
   render() {
@@ -226,12 +252,6 @@ class App extends Component {
 
     return (
       <div>
-        {/*<LoremIpsum/>
-        <div style={floatBottomRightStyle}>
-          <Form horizontal>
-              <FormControl type='text' label='chat' placeholder='Enter Text' style={floatInputBottomRightStyle} />
-          </Form>
-        </div>*/}
         <Grid>
           <Row >
             <PageHeader>
@@ -276,7 +296,7 @@ class App extends Component {
           </Row>
           <Row>
              <Col sm={9} lg={9}>
-                <Button style={{width: '100%', backgroundColor: '#FBB81F', color: 'white', fontWeight: 'bold'}}>
+                <Button style={{width: '100%', backgroundColor: '#FBB81F', color: 'white', fontWeight: 'bold'}} onClick={this.submitHandler}>
                   Submit
                 </Button>
             </Col>
