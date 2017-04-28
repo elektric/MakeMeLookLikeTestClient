@@ -62,6 +62,7 @@ class ChatWindow extends React.Component {
                 collapsible
                 defaultExpanded
                 header="Chat Bot"
+                className="pointer"
                 style={{
                 backgroundColor: 'white',
             }}>

@@ -50,6 +50,6 @@ export default class UnixGroupElement extends React.Component {
   }
 
   componentDidMount() {
-    //this.setState({ someKey: 'otherValue' });
+       //this.setState({selected: true, selectedText: 'Selected'});
   }
 }

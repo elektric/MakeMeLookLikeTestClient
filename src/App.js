@@ -262,7 +262,7 @@ class App extends Component {
     submitArr.push(data);
     setTimeout(() => {
       this.setState({disabled: false, SubmitButtonText: "Submit", modal: true, messageDetailsHistory: submitArr});
-    }, 5000);
+    }, 3000);
     this.setState({disabled: true, SubmitButtonText: "Loading..."});
     this.setState({messageDetailsHistory: submitArr});
   }
@@ -324,7 +324,6 @@ class App extends Component {
     if (this.state.userDetails === null) {
       userDetails = (
         <Panel
-          collapsible
           defaultExpanded
           header="User Details"
           style={{
@@ -338,6 +337,7 @@ class App extends Component {
           collapsible
           defaultExpanded
           header="App Funcs"
+          className="pointer"
           style={{
           backgroundColor: 'white'
         }}>
@@ -349,6 +349,7 @@ class App extends Component {
           collapsible
           defaultExpanded
           header="AD Groups"
+          className="pointer"
           style={{
           backgroundColor: 'white'
         }}>
@@ -360,6 +361,7 @@ class App extends Component {
           collapsible
           defaultExpanded
           header="UNIX Groups"
+          className="pointer"
           style={{
           backgroundColor: 'white'
         }}>
@@ -430,34 +432,38 @@ class App extends Component {
       <div>
         <Grid>
           <Row >
-            <PageHeader>
-              Make Me Look Like
-              <small>
-                &nbsp; Chatbot Hackathon 2017
-              </small>
+            <PageHeader style={{marginTop: '-10px'}}>
+              <img
+                src={require('./NM.jpeg')}
+                style={{
+                width: '100px',
+                height: '100px',
+                }}
+                alt="NM Logo"/>
+              <span style={{paddingLeft: '20px', verticalAlign: 'bottom', fontSize: '44'}}>Access Bot </span>
             </PageHeader>
 
           </Row>
           <Row>
-            <Col sm={9} lg={9}>
+            <Col sm={9} lg={9} className="pointer">
               {userDetails}
             </Col>
           </Row>
 
           <Row>
-            <Col sm={9} lg={9}>
+            <Col sm={9} lg={9} className="pointer">
               {appFuncs}
             </Col>
           </Row>
 
           <Row>
-            <Col sm={9} lg={9}>
+            <Col sm={9} lg={9} className="pointer">
               {adGroups}
             </Col>
           </Row>
 
           <Row>
-            <Col sm={9} lg={9}>
+            <Col sm={9} lg={9} className="pointer">
               {unixGroups}
             </Col>
 
@@ -506,6 +512,7 @@ class App extends Component {
                     collapsible
                     defaultExpanded
                     header="App Funcs"
+                    className="pointer"
                     style={{
                     backgroundColor: 'white',
                     justifyContent: 'center',
@@ -522,6 +529,7 @@ class App extends Component {
                     collapsible
                     defaultExpanded
                     header="AD Groups"
+                    className="pointer"
                     style={{
                     backgroundColor: 'white',
                     justifyContent: 'center',
@@ -538,6 +546,7 @@ class App extends Component {
                     collapsible
                     defaultExpanded
                     header="UNIX Groups"
+                    className="pointer"
                     style={{
                     backgroundColor: 'white',
                     justifyContent: 'center',
@@ -552,6 +561,7 @@ class App extends Component {
           </Modal.Body>
           <Modal.Footer>
             <Button
+              className="pointer"
               style={{
               backgroundColor: '#FBB81F',
               color: 'white',

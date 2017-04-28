@@ -40,5 +40,12 @@
 .panel-default>.panel-heading {
   background-color: #0168B3;
   color: #fff;  
+  cursor: pointer;
+}
+
+.userDetail {
+  background-color: #88888D;
+  color: #fff;  
   font-weight: bold;
 }
+

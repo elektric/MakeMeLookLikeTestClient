@@ -54,7 +54,6 @@ class UserDetails extends React.Component {
             <Panel
                 style={primaryUserDetails}
                 header="User Details"
-                collapsible
                 defaultExpanded>
                 <ListGroup>
                     <Grid>
