@@ -69,6 +69,7 @@ class App extends Component {
     super();
     this.state = {
       disabled: true,
+      SubmitButtonText: "Submit",
       modal: false,
       appFuncs: null,
       adGroups: null,
@@ -91,14 +92,14 @@ class App extends Component {
       .CloseModal
       .bind(this);
     this.appFuncButtonHandler = this
-    .appFuncButtonHandler
-    .bind(this);
+      .appFuncButtonHandler
+      .bind(this);
     this.adGroupButtonHandler = this
-    .adGroupButtonHandler
-    .bind(this);
+      .adGroupButtonHandler
+      .bind(this);
     this.unixButtonHandler = this
-    .unixButtonHandler
-    .bind(this);
+      .unixButtonHandler
+      .bind(this);
   }
 
   componentWillMount() {
@@ -159,9 +160,17 @@ class App extends Component {
             }
           };
           newArrayBot.push(data);
-          this.setState({userDetails: response.data.user.UserDetails, appFuncs: response.data.user.AppFuncs, adGroups: response.data.user.ADGroups, 
-            unixGroups: response.data.user.UnixGroups, messageDetailsHistory: newArrayBot, disabled:true, appFuncStateCount: response.data.user.AppFuncs.length,
-          adGroupStateCount: response.data.user.ADGroups.length, unixStateCount: response.data.user.UnixGroups.length});
+          this.setState({
+            userDetails: response.data.user.UserDetails,
+            appFuncs: response.data.user.AppFuncs,
+            adGroups: response.data.user.ADGroups,
+            unixGroups: response.data.user.UnixGroups,
+            messageDetailsHistory: newArrayBot,
+            disabled: true,
+            appFuncStateCount: response.data.user.AppFuncs.length,
+            adGroupStateCount: response.data.user.ADGroups.length,
+            unixStateCount: response.data.user.UnixGroups.length
+          });
         } else if (response.data.intent === "lookLike") {
           var newArrayBot = this
             .state
@@ -174,9 +183,17 @@ class App extends Component {
             }
           };
           newArrayBot.push(data);
-          this.setState({userDetails: response.data.user.UserDetails, appFuncs: response.data.user.AppFuncs, adGroups: response.data.user.ADGroups, 
-            unixGroups: response.data.user.UnixGroups, messageDetailsHistory: newArrayBot, disabled:false, appFuncStateCount: response.data.user.AppFuncs.length,
-          adGroupStateCount: response.data.user.ADGroups.length, unixStateCount: response.data.user.UnixGroups.length});
+          this.setState({
+            userDetails: response.data.user.UserDetails,
+            appFuncs: response.data.user.AppFuncs,
+            adGroups: response.data.user.ADGroups,
+            unixGroups: response.data.user.UnixGroups,
+            messageDetailsHistory: newArrayBot,
+            disabled: false,
+            appFuncStateCount: response.data.user.AppFuncs.length,
+            adGroupStateCount: response.data.user.ADGroups.length,
+            unixStateCount: response.data.user.UnixGroups.length
+          });
         } else if (response.data.intent === "grantRole") {
           var newArrayBot = this
             .state
@@ -189,10 +206,17 @@ class App extends Component {
             }
           };
           newArrayBot.push(data);
-          this.setState({userDetails: response.data.user.UserDetails, appFuncs: response.data.user.AppFuncs, adGroups: response.data.user.ADGroups, 
-            unixGroups: response.data.user.UnixGroups, messageDetailsHistory: newArrayBot, appFuncStateCount: response.data.user.AppFuncs.length,
-          adGroupStateCount: response.data.user.ADGroups.length, unixStateCount: response.data.user.UnixGroups.length});
-        } else  if (response.data.intent ==="Invalid"){
+          this.setState({
+            userDetails: response.data.user.UserDetails,
+            appFuncs: response.data.user.AppFuncs,
+            adGroups: response.data.user.ADGroups,
+            unixGroups: response.data.user.UnixGroups,
+            messageDetailsHistory: newArrayBot,
+            appFuncStateCount: response.data.user.AppFuncs.length,
+            adGroupStateCount: response.data.user.ADGroups.length,
+            unixStateCount: response.data.user.UnixGroups.length
+          });
+        } else if (response.data.intent === "Invalid") {
           var newArrayBot = this
             .state
             .messageDetailsHistory
@@ -205,9 +229,7 @@ class App extends Component {
           };
           newArrayBot.push(data);
           this.setState({messageDetailsHistory: newArrayBot});
-        }
-
-        else  {
+        } else {
           var newArrayBot = this
             .state
             .messageDetailsHistory
@@ -222,7 +244,6 @@ class App extends Component {
           this.setState({messageDetailsHistory: newArrayBot});
         }
 
-
       });
   }
 
@@ -234,33 +255,64 @@ class App extends Component {
     var data = {
       messageDetails: {
         "messageType": 1,
+        "messageText": "Working on the submission!"
+      }
+    };
+    submitArr.push(data);
+    setTimeout(() => {
+      this.setState({disabled: false, SubmitButtonText: "Submit", modal: true, messageDetailsHistory: submitArr});
+    }, 5000);
+    this.setState({disabled: true, SubmitButtonText: "Loading..."});
+    this.setState({messageDetailsHistory: submitArr});
+  }
+
+  appFuncButtonHandler(value) {
+    let count = this.state.appFuncStateCount;
+
+    this.setState({
+      appFuncStateCount: count + value
+    });
+  }
+
+  adGroupButtonHandler(value) {
+    let count = this.state.adGroupStateCount;
+
+    this.setState({
+      adGroupStateCount: count + value
+    });
+  }
+
+  unixButtonHandler(value) {
+    let count = this.state.unixStateCount;
+
+    this.setState({
+      unixStateCount: count + value
+    });
+  }
+
+  CloseModal() {
+    var submitArr = this
+      .state
+      .messageDetailsHistory
+      .slice();
+    var data = {
+      messageDetails: {
+        "messageType": 1,
         "messageText": "I've submitted the access requests for you!"
       }
     };
     submitArr.push(data);
-    this.setState({messageDetailsHistory: submitArr, modal: true});
+    this.setState({modal: false, messageDetailsHistory: submitArr});
   }
 
-  appFuncButtonHandler(value){
-    let count = this.state.appFuncStateCount; 
+  handleClick() {
+    this.setState({isLoading: true});
 
-    this.setState({appFuncStateCount: count + value});
-  }
-
-  adGroupButtonHandler(value){
-    let count = this.state.adGroupStateCount; 
-
-    this.setState({adGroupStateCount: count + value});
-  }
-
-  unixButtonHandler(value){
-    let count = this.state.unixStateCount; 
-
-    this.setState({unixStateCount: count + value});
-  }
-
-  CloseModal() {
-    this.setState({modal: false});
+    // This probably where you would have an `ajax` call
+    setTimeout(() => {
+      // Completed of async action, set loading state back
+      this.setState({isLoading: false});
+    }, 5000);
   }
 
   render() {
@@ -321,7 +373,10 @@ class App extends Component {
       );
       appFuncs = (
         <div>
-          <AppFuncList AppFuncDetails={this.state.appFuncs} ButtonHandler={this.appFuncButtonHandler} disabled={this.state.disabled}/>
+          <AppFuncList
+            AppFuncDetails={this.state.appFuncs}
+            ButtonHandler={this.appFuncButtonHandler}
+            disabled={this.state.disabled}/>
         </div>
       );
 
@@ -329,7 +384,10 @@ class App extends Component {
 
       adGroups = (
         <div>
-          <ADGroupList ADGroupDetails={this.state.adGroups} ButtonHandler={this.adGroupButtonHandler} disabled={this.state.disabled}/>
+          <ADGroupList
+            ADGroupDetails={this.state.adGroups}
+            ButtonHandler={this.adGroupButtonHandler}
+            disabled={this.state.disabled}/>
         </div>
       );
 
@@ -337,35 +395,35 @@ class App extends Component {
 
       unixGroups = (
         <div>
-          <UnixGroupList UnixGroupDetails={this.state.unixGroups} ButtonHandler={this.unixButtonHandler} disabled={this.state.disabled}/>
+          <UnixGroupList
+            UnixGroupDetails={this.state.unixGroups}
+            ButtonHandler={this.unixButtonHandler}
+            disabled={this.state.disabled}/>
         </div>
       );
     }
 
-    var appFuncCount = 0; 
-    var unixCount = 0; 
+    var appFuncCount = 0;
+    var unixCount = 0;
     var adGroupCount = 0
 
     if (this.state.appFuncs === null) {
-       appFuncCount = 0;
+      appFuncCount = 0;
+    } else {
+      appFuncCount = this.state.appFuncs.length;
     }
-    else {
-       appFuncCount = this.state.appFuncs.length;
-    } 
 
     if (this.state.unixGroups === null) {
-       unixCount = 0;
+      unixCount = 0;
+    } else {
+      unixCount = this.state.unixGroups.length;
     }
-    else {
-       unixCount = this.state.unixGroups.length;
-    } 
 
     if (this.state.adGroups === null) {
-       adGroupCount = 0;
+      adGroupCount = 0;
+    } else {
+      adGroupCount = this.state.adGroups.length;
     }
-    else {
-       adGroupCount = this.state.adGroups.length;
-    } 
 
     return (
       <div>
@@ -381,7 +439,7 @@ class App extends Component {
           </Row>
           <Row>
             <Col sm={9} lg={9}>
-             {userDetails}
+              {userDetails}
             </Col>
           </Row>
 
@@ -421,7 +479,7 @@ class App extends Component {
               }}
                 disabled={this.state.disabled}
                 onClick={this.submitHandler}>
-                Submit
+                {this.state.SubmitButtonText}
               </Button>
             </Col>
           </Row>
@@ -429,69 +487,76 @@ class App extends Component {
 
         <Modal show={this.state.modal} onHide={this.close}>
           <Modal.Header>
-            <Modal.Title style={{backgroundColor: 'white', justifyContent: 'center',textAlign: 'center', fontWeight: 'bold'}}>
+            <Modal.Title
+              style={{
+              backgroundColor: 'white',
+              justifyContent: 'center',
+              textAlign: 'center',
+              fontWeight: 'bold'
+            }}>
               Submitted Access
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div>
-          <Row>
-            <Col sm={12} lg={12}>
-            <Panel
-              collapsible
-              defaultExpanded
-              header="App Funcs"
-              style={{
-              backgroundColor: 'white',
-              justifyContent: 'center',
-              textAlign: 'center'
-              }}>
-                   I have submitted {this.state.appFuncStateCount} App Funcs for you!
-              </Panel>
-            </Col>
-          </Row>
+              <Row>
+                <Col sm={12} lg={12}>
+                  <Panel
+                    collapsible
+                    defaultExpanded
+                    header="App Funcs"
+                    style={{
+                    backgroundColor: 'white',
+                    justifyContent: 'center',
+                    textAlign: 'center'
+                  }}>
+                    I have submitted {this.state.appFuncStateCount} App Funcs for you!
+                  </Panel>
+                </Col>
+              </Row>
 
-          <Row>
-            <Col sm={12} lg={12}>
-            <Panel
-            collapsible
-            defaultExpanded
-            header="AD Groups"
-            style={{
-            backgroundColor: 'white',
-            justifyContent: 'center',
-            textAlign: 'center'
-            }}>
-              I have submitted {this.state.adGroupStateCount} AD Groups for you!
-              </Panel>
-            </Col>
-          </Row>
+              <Row>
+                <Col sm={12} lg={12}>
+                  <Panel
+                    collapsible
+                    defaultExpanded
+                    header="AD Groups"
+                    style={{
+                    backgroundColor: 'white',
+                    justifyContent: 'center',
+                    textAlign: 'center'
+                  }}>
+                    I have submitted {this.state.adGroupStateCount} AD Groups for you!
+                  </Panel>
+                </Col>
+              </Row>
 
-          <Row>
-            <Col sm={12} lg={12}>
-            <Panel
-              collapsible
-              defaultExpanded
-              header="UNIX Groups"
-              style={{
-              backgroundColor: 'white',
-              justifyContent: 'center',
-              textAlign: 'center'
-              }}>
-                I have submitted {this.state.unixStateCount} UNIX Groups for you!
-              </Panel>
-            </Col>
+              <Row>
+                <Col sm={12} lg={12}>
+                  <Panel
+                    collapsible
+                    defaultExpanded
+                    header="UNIX Groups"
+                    style={{
+                    backgroundColor: 'white',
+                    justifyContent: 'center',
+                    textAlign: 'center'
+                  }}>
+                    I have submitted {this.state.unixStateCount} UNIX Groups for you!
+                  </Panel>
+                </Col>
 
-          </Row>
+              </Row>
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button 
-             style={{
-                backgroundColor: '#FBB81F',
-                color: 'white',
-                fontWeight: 'bold'}}
-             onClick={this.closeModal}>Close</Button>
+            <Button
+              style={{
+              backgroundColor: '#FBB81F',
+              color: 'white',
+              fontWeight: 'bold'
+            }}
+              onClick={this.closeModal}>Close</Button>
           </Modal.Footer>
         </Modal>
       </div>
