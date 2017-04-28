@@ -212,11 +212,12 @@ class App extends Component {
             adGroups: response.data.user.ADGroups,
             unixGroups: response.data.user.UnixGroups,
             messageDetailsHistory: newArrayBot,
+            disabled: false,
             appFuncStateCount: response.data.user.AppFuncs.length,
             adGroupStateCount: response.data.user.ADGroups.length,
             unixStateCount: response.data.user.UnixGroups.length
           });
-        } else if (response.data.intent === "Invalid") {
+        } else if (response.data.intent === "invalid" || response.data.intent === "Invalid") {
           var newArrayBot = this
             .state
             .messageDetailsHistory
