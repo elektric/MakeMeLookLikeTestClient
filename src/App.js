@@ -12,7 +12,8 @@ import {
   PageHeader,
   Panel,
   ListGroup, 
-  Button
+  Button, 
+  Modal
 } from 'react-bootstrap';
 
 var axios = require('axios');
@@ -67,6 +68,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      modal: false,
       appFuncs: null,
       adGroups: null,
       userDetails: null,
@@ -77,6 +79,7 @@ class App extends Component {
 
     this.handleUserInput = this.UserInputHandler.bind(this);
     this.submitHandler = this.SubmitHandler.bind(this);
+    this.closeModal = this.CloseModal.bind(this);
   }
 
   componentWillMount() {
@@ -200,7 +203,11 @@ class App extends Component {
             }
           };
    submitArr.push(data); 
-   this.setState({messageDetailsHistory: submitArr});
+   this.setState({messageDetailsHistory: submitArr, modal: true});
+  }
+
+  CloseModal(){
+    this.setState({modal: false});
   }
 
   render() {
@@ -334,6 +341,38 @@ class App extends Component {
             </Col>
           </Row>
         </Grid>
+           
+           <Modal show={this.state.modal} onHide={this.close}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+             <div className="container">
+  <div className="cup">
+    <div className="coffee"> </div>
+  </div>
+  <div className="holder"></div>
+  <div className="holder2"> </div>
+  <div className="straw"> 
+    <div className="inner"> </div>
+  </div>
+  
+  <div className="laptop"> 
+    <div className="monitor">
+      <div className="screen"> 
+        <div className="element"> </div>
+      </div>
+      <div className="stand"> 
+        <div className="base"> </div>
+      </div>
+    </div>
+  </div>
+</div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.closeModal}>Close</Button>
+          </Modal.Footer>
+          </Modal>
       </div>
     );
   }
